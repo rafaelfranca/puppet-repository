@@ -20,7 +20,6 @@ Puppet::Type.type(:repository).provide :git do
     command = [
       command(:git),
       "clone",
-      friendly_config,
       friendly_extra,
       friendly_source,
       friendly_path
@@ -62,7 +61,7 @@ Puppet::Type.type(:repository).provide :git do
 
   def friendly_config
     @friendly_config ||= Array.new.tap do |a|
-      @resource[:config].each do |setting, value|
+      (@resource[:config] || {}).each do |setting, value|
         a << "-c #{setting}=#{value}"
       end
     end.join(' ').strip
