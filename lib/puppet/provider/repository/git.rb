@@ -20,7 +20,8 @@ Puppet::Type.type(:repository).provide :git do
     command = [
       command(:git),
       "clone",
-      friendly_extra,
+      friendly_config unless friendly_config.empty?,
+      friendly_extra unless friendly_extra.empty?,
       friendly_source,
       friendly_path
     ].flatten.compact
